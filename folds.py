@@ -106,8 +106,8 @@ def straight(A, B, C):
     return cayley_mengler_det == 0
 
 
-assert(straight(v1, v2, v3)) == True
-assert(straight(v1, v2, v4)) == False
+assert straight(v1, v2, v3) == True
+assert straight(v1, v2, v4) == False
 
 
 # The simplification of the 5x5 is:
