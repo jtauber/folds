@@ -108,3 +108,49 @@ def straight(A, B, C):
 
 assert(straight(v1, v2, v3)) == True
 assert(straight(v1, v2, v4)) == False
+
+
+# The simplification of the 5x5 is:
+#
+# det = -2 AB AC BC + 2 AB AD BC + 2 AC AD BC - 2 AD^2 BC - 2 AD BC^2 +
+# 2 AB AC BD - 2 AC^2 BD - 2 AB AD BD + 2 AC AD BD + 2 AC BC BD +
+# 2 AD BC BD - 2 AC BD^2 - 2 AB^2 CD + 2 AB AC CD + 2 AB AD CD -
+# 2 AC AD CD + 2 AB BC CD + 2 AD BC CD + 2 AB BD CD + 2 AC BD CD -
+# 2 BC BD CD - 2 AB CD^2
+
+def plane(A, B, C, D):
+    AB = distance(A, B) ** 2
+    AC = distance(A, C) ** 2
+    AD = distance(A, D) ** 2
+    BC = distance(B, C) ** 2
+    BD = distance(B, D) ** 2
+    CD = distance(C, D) ** 2
+    
+    cayley_mengler_det = (
+        - 2 * AB * AB * CD
+        - 2 * AB * AC * BC
+        + 2 * AB * AC * BD
+        + 2 * AB * AC * CD
+        + 2 * AB * AD * BC
+        - 2 * AB * AD * BD
+        + 2 * AB * AD * CD
+        + 2 * AB * BC * CD
+        + 2 * AB * BD * CD
+        - 2 * AB * CD * CD
+
+        - 2 * AC * AC * BD
+        + 2 * AC * AD * BC
+        + 2 * AC * AD * BD
+        - 2 * AC * AD * CD
+        + 2 * AC * BC * BD
+        - 2 * AC * BD * BD
+        + 2 * AC * BD * CD
+
+        - 2 * AD * AD * BC
+        - 2 * AD * BC * BC
+        + 2 * AD * BC * BD
+        + 2 * AD * BC * CD
+        
+        - 2 * BC * BD * CD
+    )
+    return cayley_mengler_det == 0
