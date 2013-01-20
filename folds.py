@@ -12,3 +12,16 @@ class Vertex:
 
 v1 = Vertex(0, 0, 0)
 v2 = Vertex(0, 1, 0)
+
+
+# Next we define a distance function that takes two vertices
+
+from math import sqrt
+
+
+def distance(vertex_1, vertex_2):
+    return sqrt(sum((c1 - c2) ** 2 for c1, c2 in
+        zip(vertex_1.coordinates, vertex_2.coordinates)))
+
+
+assert distance(v1, v2) == 1.0
