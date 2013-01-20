@@ -81,3 +81,30 @@ v4 = Vertex(1, 0, 0)
 
 assert colinear(v1, v2, v3) == True
 assert colinear(v1, v2, v4) == False
+
+
+# Before moving on to coplanarity, I'm going to take a moment to try
+# reimplementing the colinearity test using Cayley-Menger determinants
+
+# simplifying the 4x4 Cayley-Menger determinant for determining whether three
+# elements are "straight", we get:
+#
+# det = AB^2 - 2 AB AC + AC^2 - 2 AB BC - 2 AC BC + BC^2
+#
+# where AB, AC and BC are the square of the distance
+
+def straight(A, B, C):
+    AB = distance(A, B) ** 2
+    AC = distance(A, C) ** 2
+    BC = distance(B, C) ** 2
+    
+    cayley_mengler_det = (
+        AB * AB + AC * AC + BC * BC
+        - 2 * AB * AC - 2 * AB * BC - 2 * AC * BC
+    )
+    
+    return cayley_mengler_det == 0
+
+
+assert(straight(v1, v2, v3)) == True
+assert(straight(v1, v2, v4)) == False
