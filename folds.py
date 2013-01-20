@@ -25,3 +25,19 @@ def distance(vertex_1, vertex_2):
 
 
 assert distance(v1, v2) == 1.0
+
+
+# An Edge pairs two vertices together
+
+class Edge:
+    def __init__(self, vertex_1, vertex_2):
+        self.vertex_1 = vertex_1
+        self.vertex_2 = vertex_2
+    
+    def length(self):
+        return distance(self.vertex_1, self.vertex_2)
+
+
+e1 = Edge(v1, v2)
+
+assert e1.length() == 1.0
