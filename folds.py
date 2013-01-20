@@ -41,3 +41,43 @@ class Edge:
 e1 = Edge(v1, v2)
 
 assert e1.length() == 1.0
+
+
+# We want a test for colinearity. To do that, we'll first introduce the notion
+# of a 3-tuple "vector", the conversion to spherical coordinates to get a
+# "direction" and then finally a test for whether two vectors are
+# parallel or not
+
+def vector(vertex_1, vertex_2):
+    return tuple(c1 - c2 for c1, c2 in
+        zip(vertex_1.coordinates, vertex_2.coordinates))
+
+# (we could rewrite "distance" above to use this)
+
+from math import acos, atan2
+
+
+def direction(vector):
+    r = sqrt(sum(c ** 2 for c in vector))
+    theta = acos(vector[2] / r)
+    phi = atan2(vector[1], vector[0])
+    return (theta, phi)
+
+
+assert vector(v1, v2) == (0, -1, 0)
+assert direction(vector(v1, v2)) == (1.5707963267948966, -1.5707963267948966)
+
+
+def colinear(*vertices):
+    d = direction(vector(vertices[0], vertices[1]))
+    for vertex in vertices[2:]:
+        if direction(vector(vertices[0], vertex)) != d:
+            return False
+    return True
+
+
+v3 = Vertex(0, 2, 0)
+v4 = Vertex(1, 0, 0)
+
+assert colinear(v1, v2, v3) == True
+assert colinear(v1, v2, v4) == False
