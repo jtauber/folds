@@ -118,13 +118,25 @@ assert(straight(v1, v2, v4)) == False
 # 2 AC AD CD + 2 AB BC CD + 2 AD BC CD + 2 AB BD CD + 2 AC BD CD -
 # 2 BC BD CD - 2 AB CD^2
 
+# where AB, AC, AD, BC, BD, CD are squares of the distance
+
+# Because taking a square root in distance() then squaring again can lead to
+# imprecision which results in a determinant very close but not quite zero
+# when it really should be zero, we'll use a square_distance function:
+
+
+def square_distance(vertex_1, vertex_2):
+    return sum((c1 - c2) ** 2 for c1, c2 in
+        zip(vertex_1.coordinates, vertex_2.coordinates))
+
+
 def plane(A, B, C, D):
-    AB = distance(A, B) ** 2
-    AC = distance(A, C) ** 2
-    AD = distance(A, D) ** 2
-    BC = distance(B, C) ** 2
-    BD = distance(B, D) ** 2
-    CD = distance(C, D) ** 2
+    AB = square_distance(A, B)
+    AC = square_distance(A, C)
+    AD = square_distance(A, D)
+    BC = square_distance(B, C)
+    BD = square_distance(B, D)
+    CD = square_distance(C, D)
     
     cayley_mengler_det = (
         - 2 * AB * AB * CD
@@ -153,4 +165,22 @@ def plane(A, B, C, D):
         
         - 2 * BC * BD * CD
     )
+    return cayley_mengler_det == 0
+
+
+assert plane(v1, v2, v3, v4) == True
+
+
+# We can now rewrite straight as:
+
+def better_straight(A, B, C):
+    AB = square_distance(A, B)
+    AC = square_distance(A, C)
+    BC = square_distance(B, C)
+    
+    cayley_mengler_det = (
+        AB * AB + AC * AC + BC * BC
+        - 2 * AB * AC - 2 * AB * BC - 2 * AC * BC
+    )
+    
     return cayley_mengler_det == 0
