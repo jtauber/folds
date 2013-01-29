@@ -99,12 +99,12 @@ def straight(A, B, C):
     AC = distance(A, C) ** 2
     BC = distance(B, C) ** 2
     
-    cayley_mengler_det = (
+    cayley_menger_det = (
         AB * AB + AC * AC + BC * BC
         - 2 * AB * AC - 2 * AB * BC - 2 * AC * BC
     )
     
-    return cayley_mengler_det == 0
+    return cayley_menger_det == 0
 
 
 assert straight(v1, v2, v3) == True
@@ -139,7 +139,7 @@ def plane(A, B, C, D):
     BD = square_distance(B, D)
     CD = square_distance(C, D)
     
-    cayley_mengler_det = (
+    cayley_menger_det = (
         - 2 * AB * AB * CD
         - 2 * AB * AC * BC
         + 2 * AB * AC * BD
@@ -166,7 +166,7 @@ def plane(A, B, C, D):
         
         - 2 * BC * BD * CD
     )
-    return cayley_mengler_det == 0
+    return cayley_menger_det == 0
 
 
 assert plane(v1, v2, v3, v4) == True
@@ -179,12 +179,12 @@ def better_straight(A, B, C):
     AC = square_distance(A, C)
     BC = square_distance(B, C)
     
-    cayley_mengler_det = (
+    cayley_menger_det = (
         AB * AB + AC * AC + BC * BC
         - 2 * AB * AC - 2 * AB * BC - 2 * AC * BC
     )
     
-    return cayley_mengler_det == 0
+    return cayley_menger_det == 0
 
 
 # to model folding, we're going to want to know the foot of an altitude from
