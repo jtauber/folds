@@ -33,7 +33,7 @@ class Edge:
         return quadrance(self.vertex_1, self.vertex_2)
 
 
-def rational_foot_of_altitude(vertex, edge):
+def foot_of_altitude(vertex, edge):
     x1, y1, z1 = edge.vertex_1.coordinates
     x2, y2, z2 = edge.vertex_2.coordinates
     x3, y3, z3 = vertex.coordinates
