@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
-
 from folds import *
+
 
 v1 = Vertex(0, 0, 0)
 v2 = Vertex(0, 1, 0)
-
 
 assert quadrance(v1, v2) == 1
 
