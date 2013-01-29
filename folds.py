@@ -11,6 +11,19 @@ def quadrance(vertex_1, vertex_2):
         zip(vertex_1.coordinates, vertex_2.coordinates))
 
 
+def collinear(vertex_1, vertex_2, vertex_3):
+    q12 = quadrance(vertex_1, vertex_2)
+    q13 = quadrance(vertex_1, vertex_3)
+    q23 = quadrance(vertex_2, vertex_3)
+    
+    cayley_mengler_det = (
+        q12 * q12 + q13 * q13 + q23 * q23
+        - 2 * q12 * q13 - 2 * q12 * q23 - 2 * q13 * q23
+    )
+    
+    return cayley_mengler_det == 0
+
+
 class Edge:
     def __init__(self, vertex_1, vertex_2):
         self.vertex_1 = vertex_1
