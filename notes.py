@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 
 
 # We'll start with the notion of a vertex
