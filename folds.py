@@ -218,3 +218,8 @@ def rational_foot_of_altitude(vertex, edge):
 
 
 assert rational_foot_of_altitude(Vertex(1, 2, 0), Edge(Vertex(0, 0, 0,), Vertex(2, 0, 0))).coordinates == (1, 0, 0)
+
+
+# if we have a point C and the line AB and we calculate the foot of the
+# altitude from C to AB to be D, then what we now want to do is parameterize
+# the circle with axis AB, centre D, radius |CD|
