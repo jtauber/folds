@@ -194,12 +194,16 @@ def foot_of_altitude(vertex, edge):
     x2, y2, z2 = edge.vertex_2.coordinates
     x3, y3, z3 = vertex.coordinates
     
-    t = 1. * ((x1 - x2) * (x1 - x3) + (y1 - y2) * (y1 - y3) + (z1 - z2) * (z1 - z3)) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+    t = 1. * (
+        (x1 - x2) * (x1 - x3) + (y1 - y2) * (y1 - y3) + (z1 - z2) * (z1 - z3)
+    ) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
     
     return Vertex(x1 + (x2 - x1) * t, y1 + (y2 - y1) * t, z1 + (z2 - z1) * t)
 
 
-assert foot_of_altitude(Vertex(1, 2, 0), Edge(Vertex(0, 0, 0,), Vertex(2, 0, 0))).coordinates == (1, 0, 0)
+assert foot_of_altitude(
+    Vertex(1, 2, 0), Edge(Vertex(0, 0, 0,), Vertex(2, 0, 0))
+).coordinates == (1, 0, 0)
 
 
 # to keep things rational, going to rewrite that using fractions.Fraction
@@ -212,12 +216,17 @@ def rational_foot_of_altitude(vertex, edge):
     x2, y2, z2 = edge.vertex_2.coordinates
     x3, y3, z3 = vertex.coordinates
     
-    t = Fraction((x1 - x2) * (x1 - x3) + (y1 - y2) * (y1 - y3) + (z1 - z2) * (z1 - z3), (x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+    t = Fraction(
+        (x1 - x2) * (x1 - x3) + (y1 - y2) * (y1 - y3) + (z1 - z2) * (z1 - z3),
+        (x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2
+    )
     
     return Vertex(x1 + (x2 - x1) * t, y1 + (y2 - y1) * t, z1 + (z2 - z1) * t)
 
 
-assert rational_foot_of_altitude(Vertex(1, 2, 0), Edge(Vertex(0, 0, 0,), Vertex(2, 0, 0))).coordinates == (1, 0, 0)
+assert rational_foot_of_altitude(
+    Vertex(1, 2, 0), Edge(Vertex(0, 0, 0,), Vertex(2, 0, 0))
+).coordinates == (1, 0, 0)
 
 
 # if we have a point C and the line AB and we calculate the foot of the
