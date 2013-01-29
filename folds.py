@@ -4,6 +4,10 @@ from fractions import Fraction
 class Vertex:
     def __init__(self, x, y, z):
         self.coordinates = (x, y, z)
+    
+    def __eq__(self, other):
+        return (isinstance(other, Vertex) and
+            self.coordinates == other.coordinates)
 
 
 def quadrance(vertex_1, vertex_2):
@@ -28,6 +32,11 @@ class Edge:
     def __init__(self, vertex_1, vertex_2):
         self.vertex_1 = vertex_1
         self.vertex_2 = vertex_2
+
+    def __eq__(self, other):
+        return (isinstance(other, Edge) and
+            self.vertex_1 == other.vertex_1 and
+            self.vertex_2 == other.vertex_2)
     
     def quadrance(self):
         return quadrance(self.vertex_1, self.vertex_2)
