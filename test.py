@@ -25,6 +25,6 @@ assert collinear(v1, v2, v4) == False
 v5 = Vertex(1, 2, 0)
 v6 = Vertex(2, 0, 0)
 
-e2 = (v1, v6)
+e2 = Edge(v1, v6)
 
 assert foot_of_altitude(v5, e2) == v4
