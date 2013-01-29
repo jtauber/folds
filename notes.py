@@ -43,7 +43,7 @@ e1 = Edge(v1, v2)
 assert e1.length() == 1.0
 
 
-# We want a test for colinearity. To do that, we'll first introduce the notion
+# We want a test for collinearity. To do that, we'll first introduce the notion
 # of a 3-tuple "vector", the conversion to spherical coordinates to get a
 # "direction" and then finally a test for whether two vectors are
 # parallel or not
@@ -68,7 +68,7 @@ assert vector(v1, v2) == (0, -1, 0)
 assert direction(vector(v1, v2)) == (1.5707963267948966, -1.5707963267948966)
 
 
-def colinear(*vertices):
+def collinear(*vertices):
     d = direction(vector(vertices[0], vertices[1]))
     for vertex in vertices[2:]:
         if direction(vector(vertices[0], vertex)) != d:
@@ -79,12 +79,12 @@ def colinear(*vertices):
 v3 = Vertex(0, 2, 0)
 v4 = Vertex(1, 0, 0)
 
-assert colinear(v1, v2, v3) == True
-assert colinear(v1, v2, v4) == False
+assert collinear(v1, v2, v3) == True
+assert collinear(v1, v2, v4) == False
 
 
 # Before moving on to coplanarity, I'm going to take a moment to try
-# reimplementing the colinearity test using Cayley-Menger determinants
+# reimplementing the collinearity test using Cayley-Menger determinants
 
 # simplifying the 4x4 Cayley-Menger determinant for determining whether three
 # elements are "straight", we get:
