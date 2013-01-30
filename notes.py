@@ -231,5 +231,28 @@ assert rational_foot_of_altitude(
 
 
 # if we have a point C and the line AB and we calculate the foot of the
-# altitude from C to AB to be D, then what we now want to do is parameterize
-# the circle with axis AB, centre D, radius |CD|
+# altitude from C to AB to be D, then what we now want to do is define a circle
+# axis AB, centre D, radius |CD|
+
+class Circle:
+    def __init__(self, center, radius, axis):
+        self.center = center
+        self.radius = radius
+        self.axis = axis
+    
+    def parameterization(self, m):
+        # the rational parametrization of a unit circle at the origin in 2D is:
+        # [(1-m^2)/(1+m^2), 2m/(1+m^2)]
+        local_x = self.radius * Fraction(1 - m ** 2, 1 + m ** 2)
+        local_y = self.radius * Fraction(2 * m, 1 + m ** 2)
+        
+        u_x, u_y, u_z = 1, 0, 0  # @@@
+        v_x, v_y, v_z = 0, 1, 0  # @@@
+        c_x, c_y, c_z = self.center.coordinates
+        
+        # now we need to transform that with c + xru + yrv
+        global_x = c_x + local_x * u_x + local_y * v_x
+        global_y = c_y + local_x * u_y + local_y * v_y
+        global_z = c_z + local_x * u_z + local_y * v_z
+        
+        return Vertex(global_x, global_y, global_z)
