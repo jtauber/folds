@@ -230,24 +230,37 @@ assert rational_foot_of_altitude(
 ).coordinates == (1, 0, 0)
 
 
+def norm_vector(edge):
+    l = Fraction(edge.length())
+    return tuple(Fraction(c1 - c2, l) for c1, c2 in
+        zip(edge.vertex_1.coordinates, edge.vertex_2.coordinates))
+
+
 # if we have a point C and the line AB and we calculate the foot of the
 # altitude from C to AB to be D, then what we now want to do is define a circle
 # axis AB, centre D, radius |CD|
 
 class Circle:
-    def __init__(self, center, radius, axis):
-        self.center = center
-        self.radius = radius
+    def __init__(self, axis, altitude):
+        assert altitude.vertex_1.coordinates == axis.vertex_1.coordinates
+        self.center = axis.vertex_1
         self.axis = axis
+        self.altitude = altitude
     
     def parameterization(self, m):
         # the rational parametrization of a unit circle at the origin in 2D is:
         # [(1-m^2)/(1+m^2), 2m/(1+m^2)]
-        local_x = self.radius * Fraction(1 - m ** 2, 1 + m ** 2)
-        local_y = self.radius * Fraction(2 * m, 1 + m ** 2)
+        radius = Fraction(self.altitude.length())
+        local_x = radius * Fraction(1 - m ** 2, 1 + m ** 2)
+        local_y = radius * Fraction(2 * m, 1 + m ** 2)
         
-        u_x, u_y, u_z = 1, 0, 0  # @@@
-        v_x, v_y, v_z = 0, 1, 0  # @@@
+        u_x, u_y, u_z = norm_vector(self.altitude)
+        w_x, w_y, w_z = norm_vector(self.axis)
+        
+        v_x = w_y * u_z - w_z * u_y
+        v_y = w_z * u_x - w_x * u_z
+        v_z = w_x * u_y - w_y * u_x
+        
         c_x, c_y, c_z = self.center.coordinates
         
         # now we need to transform that with c + xru + yrv
@@ -256,3 +269,13 @@ class Circle:
         global_z = c_z + local_x * u_z + local_y * v_z
         
         return Vertex(global_x, global_y, global_z)
+
+
+axis = Edge(Vertex(1, 0, 0), Vertex(2, 0, 0))
+altitude = Edge(Vertex(1, 0, 0), Vertex(1, 2, 0))
+
+circle = Circle(axis, altitude)
+
+for m in [0, Fraction(1, 10), Fraction(1, 2), 1]:
+    print m,
+    print circle.parameterization(m).coordinates
