@@ -8,3 +8,5 @@ install:
 
 script:
   - flake8 .
+  - notes.py
+  - test.py
