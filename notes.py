@@ -34,7 +34,7 @@ class Edge:
     def __init__(self, vertex_1, vertex_2):
         self.vertex_1 = vertex_1
         self.vertex_2 = vertex_2
-    
+
     def length(self):
         return distance(self.vertex_1, self.vertex_2)
 
@@ -98,12 +98,12 @@ def straight(A, B, C):
     AB = distance(A, B) ** 2
     AC = distance(A, C) ** 2
     BC = distance(B, C) ** 2
-    
+
     cayley_menger_det = (
         AB * AB + AC * AC + BC * BC
         - 2 * AB * AC - 2 * AB * BC - 2 * AC * BC
     )
-    
+
     return cayley_menger_det == 0
 
 
@@ -138,7 +138,7 @@ def plane(A, B, C, D):
     BC = square_distance(B, C)
     BD = square_distance(B, D)
     CD = square_distance(C, D)
-    
+
     cayley_menger_det = (
         - 2 * AB * AB * CD
         - 2 * AB * AC * BC
@@ -163,7 +163,7 @@ def plane(A, B, C, D):
         - 2 * AD * BC * BC
         + 2 * AD * BC * BD
         + 2 * AD * BC * CD
-        
+
         - 2 * BC * BD * CD
     )
     return cayley_menger_det == 0
@@ -178,12 +178,12 @@ def better_straight(A, B, C):
     AB = square_distance(A, B)
     AC = square_distance(A, C)
     BC = square_distance(B, C)
-    
+
     cayley_menger_det = (
         AB * AB + AC * AC + BC * BC
         - 2 * AB * AC - 2 * AB * BC - 2 * AC * BC
     )
-    
+
     return cayley_menger_det == 0
 
 
@@ -194,11 +194,11 @@ def foot_of_altitude(vertex, edge):
     x1, y1, z1 = edge.vertex_1.coordinates
     x2, y2, z2 = edge.vertex_2.coordinates
     x3, y3, z3 = vertex.coordinates
-    
+
     t = 1. * (
         (x1 - x2) * (x1 - x3) + (y1 - y2) * (y1 - y3) + (z1 - z2) * (z1 - z3)
     ) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
-    
+
     return Vertex(x1 + (x2 - x1) * t, y1 + (y2 - y1) * t, z1 + (z2 - z1) * t)
 
 
@@ -216,12 +216,12 @@ def rational_foot_of_altitude(vertex, edge):
     x1, y1, z1 = edge.vertex_1.coordinates
     x2, y2, z2 = edge.vertex_2.coordinates
     x3, y3, z3 = vertex.coordinates
-    
+
     t = Fraction(
         (x1 - x2) * (x1 - x3) + (y1 - y2) * (y1 - y3) + (z1 - z2) * (z1 - z3),
         (x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2
     )
-    
+
     return Vertex(x1 + (x2 - x1) * t, y1 + (y2 - y1) * t, z1 + (z2 - z1) * t)
 
 
@@ -246,28 +246,28 @@ class Circle:
         self.center = axis.vertex_1
         self.axis = axis
         self.altitude = altitude
-    
+
     def parameterization(self, m):
         # the rational parametrization of a unit circle at the origin in 2D is:
         # [(1-m^2)/(1+m^2), 2m/(1+m^2)]
         radius = Fraction(self.altitude.length())
         local_x = radius * Fraction(1 - m ** 2, 1 + m ** 2)
         local_y = radius * Fraction(2 * m, 1 + m ** 2)
-        
+
         u_x, u_y, u_z = norm_vector(self.altitude)
         w_x, w_y, w_z = norm_vector(self.axis)
-        
+
         v_x = w_y * u_z - w_z * u_y
         v_y = w_z * u_x - w_x * u_z
         v_z = w_x * u_y - w_y * u_x
-        
+
         c_x, c_y, c_z = self.center.coordinates
-        
+
         # now we need to transform that with c + xru + yrv
         global_x = c_x + local_x * u_x + local_y * v_x
         global_y = c_y + local_x * u_y + local_y * v_y
         global_z = c_z + local_x * u_z + local_y * v_z
-        
+
         return Vertex(global_x, global_y, global_z)
 
 
