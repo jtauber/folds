@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from folds import *
+from folds import Vertex, Edge, collinear, foot_of_altitude, quadrance
 
 
 v1 = Vertex(0, 0, 0)
@@ -17,8 +17,8 @@ assert e1.quadrance() == 1
 v3 = Vertex(0, 2, 0)
 v4 = Vertex(1, 0, 0)
 
-assert collinear(v1, v2, v3) == True
-assert collinear(v1, v2, v4) == False
+assert collinear(v1, v2, v3) is True
+assert collinear(v1, v2, v4) is False
 
 
 v5 = Vertex(1, 2, 0)

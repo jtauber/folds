@@ -21,8 +21,10 @@ from math import sqrt
 
 
 def distance(vertex_1, vertex_2):
-    return sqrt(sum((c1 - c2) ** 2 for c1, c2 in
-        zip(vertex_1.coordinates, vertex_2.coordinates)))
+    return sqrt(sum(
+        (c1 - c2) ** 2
+        for c1, c2 in zip(vertex_1.coordinates, vertex_2.coordinates)
+    ))
 
 
 assert distance(v1, v2) == 1.0
@@ -50,8 +52,10 @@ assert e1.length() == 1.0
 # parallel or not
 
 def vector(vertex_1, vertex_2):
-    return tuple(c1 - c2 for c1, c2 in
-        zip(vertex_1.coordinates, vertex_2.coordinates))
+    return tuple(
+        c1 - c2
+        for c1, c2 in zip(vertex_1.coordinates, vertex_2.coordinates)
+    )
 
 # (we could rewrite "distance" above to use this)
 
@@ -80,8 +84,8 @@ def collinear(*vertices):
 v3 = Vertex(0, 2, 0)
 v4 = Vertex(1, 0, 0)
 
-assert collinear(v1, v2, v3) == True
-assert collinear(v1, v2, v4) == False
+assert collinear(v1, v2, v3) is True
+assert collinear(v1, v2, v4) is False
 
 
 # Before moving on to coplanarity, I'm going to take a moment to try
@@ -107,8 +111,8 @@ def straight(A, B, C):
     return cayley_menger_det == 0
 
 
-assert straight(v1, v2, v3) == True
-assert straight(v1, v2, v4) == False
+assert straight(v1, v2, v3) is True
+assert straight(v1, v2, v4) is False
 
 
 # The simplification of the 5x5 is:
@@ -127,8 +131,10 @@ assert straight(v1, v2, v4) == False
 
 
 def square_distance(vertex_1, vertex_2):
-    return sum((c1 - c2) ** 2 for c1, c2 in
-        zip(vertex_1.coordinates, vertex_2.coordinates))
+    return sum(
+        (c1 - c2) ** 2
+        for c1, c2 in zip(vertex_1.coordinates, vertex_2.coordinates)
+    )
 
 
 def plane(A, B, C, D):
@@ -169,7 +175,7 @@ def plane(A, B, C, D):
     return cayley_menger_det == 0
 
 
-assert plane(v1, v2, v3, v4) == True
+assert plane(v1, v2, v3, v4) is True
 
 
 # We can now rewrite straight as:
@@ -232,8 +238,10 @@ assert rational_foot_of_altitude(
 
 def norm_vector(edge):
     l = Fraction(edge.length())
-    return tuple(Fraction(c1 - c2, l) for c1, c2 in
-        zip(edge.vertex_1.coordinates, edge.vertex_2.coordinates))
+    return tuple(
+        Fraction(c1 - c2, l)
+        for c1, c2 in zip(edge.vertex_1.coordinates, edge.vertex_2.coordinates)
+    )
 
 
 # if we have a point C and the line AB and we calculate the foot of the
